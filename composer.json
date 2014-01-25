@@ -1,6 +1,6 @@
 {
-    "name": "jowy/RestClient",
-    "description": "RestClient",
+    "name": "jowy/rest-client",
+    "description": "PHP 5.3+ Rest Client",
     "license": "MIT",
     "authors": [
         {
