@@ -1,0 +1,21 @@
+{
+    "name": "jowy/RestClient",
+    "description": "RestClient",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Prasetyo Wicaksono",
+            "email": "prasetyo@nanomit.es"
+        }
+    ],
+    "require": {
+        "php" : ">=5.3.0",
+        "ext-curl" : "*"
+    },
+    "require-dev": {
+        "guzzle/guzzle": "@stable"
+    },
+    "autoload": {
+        "psr-0" : { "RestClient" : "src/" }
+    }
+}
