@@ -23,13 +23,19 @@ class CurlRestClient extends RestClient
 
     	if ($method == 'POST') {
     		curl_setopt($curl, CURLOPT_POST, true);
-        	curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+    		if(!empty($data)) {
+    			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+    		}
     	} elseif ($method == 'PUT') {
     		curl_setopt($curl, CURLOPT_PUT, true);
-        	curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post));
+        	if(!empty($data)) {
+    			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+    		}
     	} elseif ($method == 'DELETE') {
     		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
-    		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post));
+    		if(!empty($data)) {
+    			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+    		}
     	}
 
     	return curl_exec($curl);
