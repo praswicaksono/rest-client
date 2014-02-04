@@ -4,6 +4,10 @@ namespace Test\RestClient;
 
 use RestClient\CurlRestClient;
 
+/**
+ * Class CurlRestClientTest
+ * @package Test\RestClient
+ */
 class CurlRestClientTest extends \PHPUnit_Framework_TestCase
 {
     protected $curl;
