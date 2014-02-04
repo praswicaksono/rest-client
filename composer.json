@@ -9,13 +9,12 @@
         }
     ],
     "require": {
-        "php" : ">=5.3.0",
-        "ext-curl" : "*"
-    },
-    "require-dev": {
-        "guzzle/guzzle": "@stable"
+        "php": ">=5.3.0",
+        "ext-curl": "*"
     },
     "autoload": {
-        "psr-0" : { "RestClient" : "src/" }
+        "psr-0": {
+            "RestClient": "src/"
+        }
     }
 }
