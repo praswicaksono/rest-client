@@ -1,5 +1,8 @@
 PHP Rest Client
 ===
+[![Build Status](https://travis-ci.org/Atriedes/rest-client.png?branch=master)](https://travis-ci.org/Atriedes/rest-client)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/801873ad-6136-48e1-8cd5-bed4d4fdd6c1/big.png)](https://insight.sensiolabs.com/projects/801873ad-6136-48e1-8cd5-bed4d4fdd6c1)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Atriedes/rest-client/badges/quality-score.png?s=54e6bdd4a59463c1d523a20a0668c60ddd6972a4)](https://scrutinizer-ci.com/g/Atriedes/rest-client/)
 Simple cURL PHP Rest Client library for PHP 5.3+
 
 ### Feature
