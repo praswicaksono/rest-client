@@ -33,14 +33,20 @@ class CurlRestClient extends RestClient
      * @param string $method
      * @param array $header
      * @param array $data
+     * @param array $auth
      * @return mixed
      */
-    public function executeQuery($url, $method = 'GET', $header = array(), $data = array())
+    public function executeQuery($url, $method = 'GET', $header = array(), $data = array(), $auth = array())
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        if (!empty($auth)) {
+            curl_setopt($curl, CURLOPT_HTTPAUTH, $auth['CURLOPT_HTTPAUTH']);
+            curl_setopt($curl, CURLOPT_USERPWD, $auth['username'] . ':' . $auth['password']);
+        }
 
         if ($method == 'POST') {
             curl_setopt($curl, CURLOPT_POST, true);
