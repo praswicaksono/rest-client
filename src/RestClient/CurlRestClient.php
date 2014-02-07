@@ -56,12 +56,14 @@ class CurlRestClient extends RestClient
                 curl_setopt($curl, CURLOPT_POSTFIELDS, array());
             }
         } elseif ($method == 'PUT') {
+            curl_setopt($curl, CURLOPT_PUT, true);
             if (!empty($data)) {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
             } else {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, array());
             }
         } elseif ($method == 'DELETE') {
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
             if (!empty($data)) {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
             } else {
