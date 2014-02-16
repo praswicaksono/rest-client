@@ -26,11 +26,29 @@ $ php composer.phar require jowy/rest-client:@stable
 ```php
 <?php
 
+include 'vendor/autoload.php';
+
 use RestClient\CurlRestClient;
 
 $curl = new CurlRestClient();
 
 var_dump($curl->executeQuery('http://www.google.com'));
+
+// OR....
+
+$curl = new CurlRestClient('http://www.google.com',
+    array( // Header data
+        'X-API-KEY: 16251821972',
+        'OUTPUT: JSON'
+    ),
+    array( // AUTH (curl)
+        'CURLOPT_HTTPAUTH' =>  CURLAUTH_DIGEST,
+        'username'  =>  'root',
+        'password'  =>  'toor'
+    )
+);
+
+
 ```
 
 ### Parameter
@@ -61,4 +79,20 @@ $curl->executeQuery('http://api.somewebsite.com',
         'password'  =>  '123456'
     )
 );
+
+// OR USE CONVENIENT METHODS
+
+// GET
+$res = $curl->get('customer/details', array(
+    'customerId' => 55
+));
+
+// POST
+$res = $curl->post('customer', array(
+    'name' => 'Ole Nordmann',
+    'age' => 49,
+    'address' => 'Stortingsveien 5',
+    'zip' => '0120',
+    'city' => 'Oslo'
+));
 ```
