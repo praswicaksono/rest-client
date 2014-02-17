@@ -36,7 +36,7 @@ class CurlRestClient extends RestClient
      * @param null $connectionTimeout
      * @param null $timeout
      */
-    public function __construct($url, $header = array(), $auth = array(), $connectionTimeout = null, $timeout = null)
+    public function __construct($url = null, $header = array(), $auth = array(), $connectionTimeout = null, $timeout = null)
     {
         $this->url = $url;
         $this->header = $header;
@@ -58,8 +58,8 @@ class CurlRestClient extends RestClient
     {
         $curl = curl_init();
 
-        if($method == 'GET')
-            $url = $url.'?'.http_build_query($data);
+        if ($method == 'GET')
+            $url = $url . '?' . http_build_query($data);
 
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
@@ -104,7 +104,7 @@ class CurlRestClient extends RestClient
      */
     private function call($method, $segment, $data = array())
     {
-        return $this->executeQuery($this->url.'/'.$segment, $method, $this->header, $data, $this->auth);
+        return $this->executeQuery($this->url . '/' . $segment, $method, $this->header, $data, $this->auth);
     }
 
     /**
