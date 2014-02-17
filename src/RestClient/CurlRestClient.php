@@ -30,6 +30,9 @@ class CurlRestClient extends RestClient
     private $timeout;
 
     /**
+     * @param null $url
+     * @param array $header
+     * @param array $auth
      * @param null $connectionTimeout
      * @param null $timeout
      */
@@ -93,26 +96,52 @@ class CurlRestClient extends RestClient
         return curl_exec($curl);
     }
 
+    /**
+     * For internal use
+     * @param string $method
+     * @param string $segment
+     * @param array $data
+     */
     private function call($method, $segment, $data = array())
     {
         return $this->executeQuery($this->url.'/'.$segment, $method, $this->header, $data, $this->auth);
     }
 
+    /**
+     * GET request
+     * @param string $segment
+     * @param array $data
+     */
     public function get($segment, $data = array())
     {
         return $this->call('GET', $segment, $data);
     }
 
+    /**
+     * POST request
+     * @param string $segment
+     * @param array $data
+     */
     public function post($segment, $data)
     {
         return $this->call('POST', $segment, $data);
     }
 
+    /**
+     * PUT request
+     * @param string $segment
+     * @param array $data
+     */
     public function put($segment, $data)
     {
         return $this->call('PUT', $segment, $data);
     }
 
+    /**
+     * DELETE request
+     * @param string $segment
+     * @param array $data
+     */
     public function delete($segment, $data)
     {
         return $this->call('DELETE', $segment, $data);
