@@ -20,29 +20,35 @@ class CurlRestClient extends RestClient
      * @var $auth array
      */
     private $auth;
-    /**
-     * @var $connectionTimeout null
-     */
-    private $connectionTimeout;
-    /**
-     * @var $timeout null
-     */
-    private $timeout;
 
     /**
      * @param null $url
      * @param array $header
      * @param array $auth
-     * @param null $connectionTimeout
-     * @param null $timeout
      */
-    public function __construct($url = null, $header = array(), $auth = array(), $connectionTimeout = null, $timeout = null)
+    public function __construct($url = null, $header = array(), $auth = array())
     {
         $this->url = $url;
         $this->header = $header;
         $this->auth = $auth;
-        $this->connectionTimeout = $connectionTimeout;
-        $this->timeout = $timeout;
+    }
+
+    /**
+     * function setHeader
+     * @param array $header
+     */
+    public function setHeader($header)
+    {
+        $this->header = $header;
+    }
+
+    /**
+     * function setAuth
+     * @param array $auth
+     */
+    public function setAuth($auth)
+    {
+        $this->auth = $auth;
     }
 
     /**
@@ -97,10 +103,11 @@ class CurlRestClient extends RestClient
     }
 
     /**
-     * For internal use
+     * function call
      * @param string $method
      * @param string $segment
      * @param array $data
+     * @return array
      */
     private function call($method, $segment, $data = array())
     {
@@ -108,9 +115,10 @@ class CurlRestClient extends RestClient
     }
 
     /**
-     * GET request
+     * function get
      * @param string $segment
      * @param array $data
+     * @return array
      */
     public function get($segment, $data = array())
     {
@@ -118,9 +126,10 @@ class CurlRestClient extends RestClient
     }
 
     /**
-     * POST request
+     * function post
      * @param string $segment
      * @param array $data
+     * @return array
      */
     public function post($segment, $data)
     {
@@ -128,9 +137,10 @@ class CurlRestClient extends RestClient
     }
 
     /**
-     * PUT request
+     * function put
      * @param string $segment
      * @param array $data
+     * @return array
      */
     public function put($segment, $data)
     {
@@ -138,9 +148,10 @@ class CurlRestClient extends RestClient
     }
 
     /**
-     * DELETE request
+     * function delete
      * @param string $segment
      * @param array $data
+     * @return array
      */
     public function delete($segment, $data)
     {
