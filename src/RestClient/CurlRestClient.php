@@ -54,20 +54,24 @@ class CurlRestClient extends RestClient
     }
 
     /**
-     * function executeQuery
      * @param string $url
      * @param string $method
      * @param array $header
      * @param array $data
      * @param array $auth
+     * @param bool $forceInit
      * @return mixed
      */
-    public function executeQuery($url, $method = 'GET', $header = array(), $data = array(), $auth = array())
+    public function executeQuery($url, $method = 'GET', $header = array(), $data = array(), $auth = array(), $forceInit = false)
     {
 
-        $this->close(); // close previous channel
+        if (true === $forceInit) {
+            $this->close(); // close previous channel
+        }
 
-        $this->curl = curl_init();
+        if (null === $this->curl) {
+            $this->curl = curl_init();
+        }
 
         if ($method == 'GET')
             $url = $url . '?' . http_build_query($data);

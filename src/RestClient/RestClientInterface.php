@@ -9,14 +9,15 @@ namespace RestClient;
 interface RestClientInterface
 {
     /**
-     * function executeQuery
-     * @param string $url
-     * @param string $adapter
+     * @param $url
      * @param string $method
-     * @param string $data
+     * @param array $header
+     * @param array $data
+     * @param array $auth
+     * @param bool $forceInit
      * @return mixed
      */
-    public function executeQuery($url, $adapter = 'curl', $method = 'GET', $data = '');
+    public function executeQuery($url, $method = 'GET', $header = array(), $data = array(), $auth = array(), $forceInit = false);
 
     /**
      * function getName
