@@ -23,4 +23,11 @@ interface RestClientInterface
      * @return mixed
      */
     public function getName();
+
+    /**
+     * Close channel
+     *
+     * @return void
+     */
+    public function close();
 }

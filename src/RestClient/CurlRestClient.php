@@ -21,6 +21,8 @@ class CurlRestClient extends RestClient
      */
     private $auth;
 
+    private $curl;
+
     /**
      * @param null $url
      * @param array $header
@@ -62,44 +64,47 @@ class CurlRestClient extends RestClient
      */
     public function executeQuery($url, $method = 'GET', $header = array(), $data = array(), $auth = array())
     {
-        $curl = curl_init();
+
+        $this->close(); // close previous channel
+
+        $this->curl = curl_init();
 
         if ($method == 'GET')
             $url = $url . '?' . http_build_query($data);
 
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->curl, CURLOPT_URL, $url);
+        curl_setopt($this->curl, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
 
         if (!empty($auth)) {
-            curl_setopt($curl, CURLOPT_HTTPAUTH, $auth['CURLOPT_HTTPAUTH']);
-            curl_setopt($curl, CURLOPT_USERPWD, $auth['username'] . ':' . $auth['password']);
+            curl_setopt($this->curl, CURLOPT_HTTPAUTH, $auth['CURLOPT_HTTPAUTH']);
+            curl_setopt($this->curl, CURLOPT_USERPWD, $auth['username'] . ':' . $auth['password']);
         }
 
         if ($method == 'POST') {
-            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($this->curl, CURLOPT_POST, true);
             if (!empty($data)) {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+                curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($data));
             } else {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, array());
+                curl_setopt($this->curl, CURLOPT_POSTFIELDS, array());
             }
         } elseif ($method == 'PUT') {
-            curl_setopt($curl, CURLOPT_PUT, true);
+            curl_setopt($this->curl, CURLOPT_PUT, true);
             if (!empty($data)) {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+                curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($data));
             } else {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, array());
+                curl_setopt($this->curl, CURLOPT_POSTFIELDS, array());
             }
         } elseif ($method == 'DELETE') {
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, "DELETE");
             if (!empty($data)) {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+                curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($data));
             } else {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, array());
+                curl_setopt($this->curl, CURLOPT_POSTFIELDS, array());
             }
         }
 
-        return curl_exec($curl);
+        return curl_exec($this->curl);
     }
 
     /**
@@ -166,4 +171,15 @@ class CurlRestClient extends RestClient
     {
         return 'curl';
     }
+
+    public function close()
+    {
+        if (null !== $this->curl) {
+            curl_close($this->curl);
+        }
+
+        $this->curl = null;
+    }
+
+
 }

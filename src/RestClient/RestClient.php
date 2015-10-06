@@ -23,4 +23,11 @@ abstract class RestClient implements RestClientInterface
      * @return mixed
      */
     abstract public function getName();
+
+    /**
+     * Close channel
+     *
+     * @return void
+     */
+    abstract public function close();
 }
