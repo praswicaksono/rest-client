@@ -47,10 +47,13 @@ $curl = new CurlRestClient('http://www.google.com',
         'CURLOPT_HTTPAUTH' =>  CURLAUTH_DIGEST,
         'username'  =>  'root',
         'password'  =>  'toor'
+    ),
+    array(
+        CURLOPT_SSL_VERIFYHOST => 0,
+        CURLOPT_SSL_VERIFYPEER => 0
     )
 );
 
-$curl->setOptions([CURLOPT_SSL_VERIFYHOST => 0, CURLOPT_SSL_VERIFYPEER => 0]);
 
 ```
 
