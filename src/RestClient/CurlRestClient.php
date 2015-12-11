@@ -21,18 +21,25 @@ class CurlRestClient extends RestClient
      */
     private $auth;
 
+    /**
+     * @var $options array
+     */
+    private $options = array();
+
     private $curl;
 
     /**
      * @param null $url
      * @param array $header
      * @param array $auth
+     * @param array $options
      */
-    public function __construct($url = null, $header = array(), $auth = array())
+    public function __construct($url = null, $header = array(), $auth = array(), $options = array())
     {
         $this->url = $url;
         $this->header = $header;
         $this->auth = $auth;
+        $this->options = $options;
     }
 
     /**
@@ -54,6 +61,15 @@ class CurlRestClient extends RestClient
     }
 
     /**
+     * function setOptions
+     * @param array $options
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+    }
+
+    /**
      * @param string $url
      * @param string $method
      * @param array $header
@@ -61,6 +77,7 @@ class CurlRestClient extends RestClient
      * @param array $auth
      * @param bool $forceInit
      * @return mixed
+     * @throws \Exception
      */
     public function executeQuery($url, $method = 'GET', $header = array(), $data = array(), $auth = array(), $forceInit = false)
     {
@@ -83,6 +100,12 @@ class CurlRestClient extends RestClient
         if (!empty($auth)) {
             curl_setopt($this->curl, CURLOPT_HTTPAUTH, $auth['CURLOPT_HTTPAUTH']);
             curl_setopt($this->curl, CURLOPT_USERPWD, $auth['username'] . ':' . $auth['password']);
+        }
+
+        if (is_array($this->options)) {
+            foreach ($this->options as $option => $value) {
+                curl_setopt($this->curl, $option, $value);
+            }
         }
 
         if ($method == 'POST') {
@@ -108,7 +131,12 @@ class CurlRestClient extends RestClient
             }
         }
 
-        return curl_exec($this->curl);
+        $content = curl_exec($this->curl);
+
+        if (FALSE === $content)
+            throw new \Exception(curl_error($this->curl), curl_errno($this->curl));
+
+        return $content;
     }
 
     /**

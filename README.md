@@ -10,6 +10,7 @@ Simple cURL PHP Rest Client library for PHP 5.3+
 ---
 * Set `HTTP Authentication`
 * Set `HTTP Header`
+* Set `Curl Options`
 * `GET`, `POST`, `PUT`, `DELETE` Method
 
 ### Installation
@@ -31,6 +32,7 @@ include 'vendor/autoload.php';
 use RestClient\CurlRestClient;
 
 $curl = new CurlRestClient();
+$curl->setOptions([CURLOPT_SSL_VERIFYHOST => 0, CURLOPT_SSL_VERIFYPEER => 0]);
 
 var_dump($curl->executeQuery('http://www.google.com'));
 
@@ -45,6 +47,10 @@ $curl = new CurlRestClient('http://www.google.com',
         'CURLOPT_HTTPAUTH' =>  CURLAUTH_DIGEST,
         'username'  =>  'root',
         'password'  =>  'toor'
+    ),
+    array(
+        CURLOPT_SSL_VERIFYHOST => 0,
+        CURLOPT_SSL_VERIFYPEER => 0
     )
 );
 
