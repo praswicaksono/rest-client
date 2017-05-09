@@ -90,8 +90,10 @@ class CurlRestClient extends RestClient
             $this->curl = curl_init();
         }
 
-        if ($method == 'GET')
-            $url = $url . '?' . http_build_query($data);
+        if ($method == 'GET') {
+            $url .= strpos($url, '?') > -1 ? '&' : '?';
+            $url .= http_build_query($data);
+        }
 
         curl_setopt($this->curl, CURLOPT_URL, $url);
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, $header);
@@ -148,7 +150,9 @@ class CurlRestClient extends RestClient
      */
     private function call($method, $segment, $data = array())
     {
-        return $this->executeQuery($this->url . '/' . $segment, $method, $this->header, $data, $this->auth);
+        $query_str = parse_url($this->url, PHP_URL_QUERY);
+        $this->url = str_replace('?'.$query_str, '', $this->url);
+        return $this->executeQuery($this->url . '/' . $segment.'?'.$query_str, $method, $this->header, $data, $this->auth);
     }
 
     /**
