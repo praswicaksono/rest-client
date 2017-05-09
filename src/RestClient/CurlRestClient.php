@@ -150,7 +150,9 @@ class CurlRestClient extends RestClient
      */
     private function call($method, $segment, $data = array())
     {
-        return $this->executeQuery($this->url . '/' . $segment, $method, $this->header, $data, $this->auth);
+        $query_str = parse_url($this->url, PHP_URL_QUERY);
+        $this->url = str_replace('?'.$query_str, '', $this->url);
+        return $this->executeQuery($this->url . '/' . $segment.'?'.$query_str, $method, $this->header, $data, $this->auth);
     }
 
     /**
